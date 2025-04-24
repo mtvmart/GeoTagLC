@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> GeoTag Interactive Mapping Exercise</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+</head>
+<style>
+
+.sidebar {
+  position: absolute;
+  left: 0px;
+  width: 250px;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  padding: 20px;
+  font-size: 16px;
+  border: solid;
+  background-color: #951c02;
+}
+.main-heading {
+    font-size: 15px;
+}
+</style>
+<body>
+  <div class="sidebar">
+  <font color="#FFFFFF"><center><h2 id="main-heading" >GeoTag Mapping</h2></center></font>
+  <div>
+
+<div class="row">
+  <div class="column">
+    <center> <img src="images/lafayette.png" alt="lafayette Logo" style="width:60%"> </center>
+  </div>
+  <font color="White"><center><h3> Easton, PA is the best!</h3></center></font>
+  </div>
+
+<font color="White"><h1> Lafayette College </h1> 
+<h2> David Bishop Skillman Library & Wawa </h2>
+<h3> How should you get from the library to Wawa during your study break? </h3>
+
+<footer>
+       <p>  <font color="White"><br> https://github.com/mckeont/GeoTag </p>
+</footer>
+
+    <div id="map" style=" position: fixed; right: 0; left: 300px; top: 0; bottom: 0 "></div>
+
+    <!-- JS IMPORTS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src= "http://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+    <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src= "js/setup.js"></script>
+    <script src= "js/Lafayette.js"></script>
+
+    <script>
+
+// Create a style variable
+    var myStyle = {
+    radius: 5,
+    fillColor: "#ff7800",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.7
+};
+
+//Load in geojson
+    var Lafayette =   L.geoJSON(Lafayette, {
+          style: myStyle
+        }).bindPopup(function (layer) {
+       return "" + layer.feature.properties.name
+    }).addTo(map).bringToBack();
+
+// Make a simple circle
+var circle = L.circle([40.70030895278616, -75.20561782167628], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 5
+}).addTo(map);
+
+// Wawa
+var polygon = L.polygon([
+    [40.700209923064875, -75.20567733837228],
+    [40.70009949133123, -75.20561951801346],
+    [40.70018294739131, -75.20532485657064],
+    [40.700296750940765, -75.20537934113922],
+    [40.700209923064875, -75.20567733837228],
+]).addTo(map);
+
+// Add a marker
+L.marker([40.69866073406289, -75.20966798050578]).addTo(map);
+    </script>
+
+</body>
+</html>
